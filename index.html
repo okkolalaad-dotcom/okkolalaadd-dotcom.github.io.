@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>streamieestore - Katalog Resmi</title>
+  <!-- Google Fonts & Tailwind CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+          colors: {
+            sage: { 50: '#F4F7F4', 100: '#E6ECE6', 200: '#C9D8C9', 500: '#4A7C59', 600: '#3B6447', 700: '#2D4E37' },
+            cream: { 50: '#FAF9F6', 100: '#F3F0E6' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background-color: #FAF9F6; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="text-slate-800 antialiased pb-12">
+
+  <!-- APP CONTAINER (Mobile-First) -->
+  <div class="max-w-md mx-auto min-h-screen relative flex flex-col">
+
+    <!-- HEADER CUSTOMER -->
+    <header class="sticky top-0 z-30 bg-cream-50/90 backdrop-blur-md border-b border-slate-200/60 px-4 py-3">
+      <div class="flex items-center justify-between">
+        <!-- Logo streamieestore (Ketuk 5x untuk Admin) -->
+        <div class="flex items-center gap-2.5 cursor-pointer select-none" onclick="handleSecretLogoClick()">
+          <div class="w-9 h-9 rounded-xl bg-sage-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+            <i class="fa-solid fa-store text-sm"></i>
+          </div>
+          <div>
+            <h1 class="font-bold text-slate-800 text-base leading-tight">streamieestore</h1>
+            <p class="text-[11px] text-slate-500 flex items-center gap-1.5 mt-0.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span> Toko Online
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEARCH BAR -->
+      <div class="mt-3 relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+        <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Cari Netflix, Spotify, Canva, Nokos..." 
+          class="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-sage-500/40 focus:border-sage-500 transition placeholder:text-slate-400">
+      </div>
+
+      <!-- CATEGORY PILLS -->
+      <div class="flex gap-2 mt-3 overflow-x-auto no-scrollbar pb-1 text-xs font-medium">
+        <button onclick="setCategory('all')" id="cat-all" class="cat-btn px-3 py-1.5 rounded-lg bg-sage-600 text-white whitespace-nowrap transition shadow-sm">Semua</button>
+        <button onclick="setCategory('Streaming')" id="cat-Streaming" class="cat-btn px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 whitespace-nowrap transition">Streaming</button>
+        <button onclick="setCategory('Design')" id="cat-Design" class="cat-btn px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 whitespace-nowrap transition">Desain</button>
+        <button onclick="setCategory('Editing')" id="cat-Editing" class="cat-btn px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 whitespace-nowrap transition">Editing</button>
+        <button onclick="setCategory('Nokos')" id="cat-Nokos" class="cat-btn px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 whitespace-nowrap transition">Nokos / OTP</button>
+      </div>
+    </header>
+
+    <!-- KATALOG PRODUK -->
+    <main class="p-4 flex-1 space-y-4" id="catalogContainer">
+      <!-- Card Brand Produk Rapi Dirender Di Sini -->
+    </main>
+
+  </div>
+
+  <!-- MODAL RAHASIA ADMIN (#admin / Ketuk Logo 5x) -->
+  <div id="adminModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center hidden p-0 sm:p-4">
+    <div class="bg-white w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 shadow-xl max-h-[90vh] overflow-y-auto">
+      
+      <!-- AUTH VIEW -->
+      <div id="adminAuthView" class="space-y-4">
+        <div class="flex justify-between items-center border-b pb-3">
+          <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-lock text-sage-600"></i> Verifikasi Owner
+          </h3>
+          <button onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">PIN Akses Khusus Owner</label>
+          <input type="password" id="pinInput" placeholder="Masukkan PIN Rahasia" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-sage-500 focus:outline-none">
+        </div>
+        <button onclick="verifyPin()" class="w-full bg-sage-600 hover:bg-sage-700 text-white font-semibold text-xs py-2.5 rounded-xl shadow transition">
+          Buka Dashboard Edit
+        </button>
+      </div>
+
+      <!-- PANEL EDIT VIEW -->
+      <div id="adminPanelView" class="space-y-4 hidden">
+        <div class="flex justify-between items-center border-b pb-3">
+          <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-sage-600"></i> Dashboard Pengaturan Toko
+          </h3>
+          <button onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="flex justify-between items-center pt-1">
+          <button onclick="resetDefaultData()" class="text-xs bg-slate-100 text-slate-600 font-semibold px-2.5 py-1.5 rounded-lg hover:bg-slate-200">
+            <i class="fa-solid fa-rotate-left"></i> Reset ke Default Baru
+          </button>
+          <button onclick="showAddProductForm()" class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2.5 py-1.5 rounded-lg hover:bg-emerald-200">
+            + Tambah Paket
+          </button>
+        </div>
+
+        <div id="adminProductList" class="space-y-2 max-h-60 overflow-y-auto pr-1">
+          <!-- Item admin editor -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // DATA DENGAN DESKRIPSI KOSONG SIAP EDIT & TAMBAHAN SPOTIFY + APPLE MUSIC
+    const defaultData = [
+      // SPOTIFY
+      { id: 1, brand: 'Spotify Premium', cat: 'Streaming', name: 'Famplan 1 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 20500, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
+      { id: 2, brand: 'Spotify Premium', cat: 'Streaming', name: 'Famplan 2 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 0, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
+      { id: 3, brand: 'Spotify Premium', cat: 'Streaming', name: 'Indplan 1 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 21000, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
+      { id: 4, brand: 'Spotify Premium', cat: 'Streaming', name: 'Indplan 2 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 0, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
+
+      // APPLE MUSIC
+      { id: 5, brand: 'Apple Music', cat: 'Streaming', name: 'Famplan 1 Bulan', desc: '', note: 'Menggunakan imess buyer +Rp1.000 & sistem mungkin replace', price: 19000, status: 'ready', icon: 'fa-music', color: 'text-rose-500' },
+      { id: 6, brand: 'Apple Music', cat: 'Streaming', name: 'Famplan 2 Bulan', desc: '', note: 'Menggunakan imess buyer +Rp1.000 & sistem mungkin replace', price: 0, status: 'ready', icon: 'fa-music', color: 'text-rose-500' },
+
+      // YOUTUBE PREMIUM
+      { id: 7, brand: 'YouTube Premium', cat: 'Streaming', name: 'Famplan 1 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 6500, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
+      { id: 8, brand: 'YouTube Premium', cat: 'Streaming', name: 'Famplan 2 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 14000, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
+      { id: 9, brand: 'YouTube Premium', cat: 'Streaming', name: 'Indplan 1 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 12000, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
+      { id: 10, brand: 'YouTube Premium', cat: 'Streaming', name: 'Indplan 3 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 28000, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
+      { id: 11, brand: 'YouTube Premium', cat: 'Streaming', name: 'Mixplan Acc Adm Only 3 Bulan', desc: '', note: '', price: 0, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
+      { id: 12, brand: 'YouTube Premium', cat: 'Streaming', name: 'Mixplan Acc Adm Only 6 Bulan', desc: '', note: '', price: 0, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
+
+      // NETFLIX PREMIUM
+      { id: 13, brand: 'Netflix Premium', cat: 'Streaming', name: 'Sharing 1P1U 3 Hari', desc: '', note: '', price: 11000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
+      { id: 14, brand: 'Netflix Premium', cat: 'Streaming', name: 'Sharing 1P1U 7 Hari', desc: '', note: '', price: 18000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
+      { id: 15, brand: 'Netflix Premium', cat: 'Streaming', name: 'Sharing 1P1U 1 Bulan', desc: '', note: '', price: 42000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
+      { id: 16, brand: 'Netflix Premium', cat: 'Streaming', name: 'Sharing 1P2U 1 Bulan', desc: '', note: '', price: 26000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
+      { id: 17, brand: 'Netflix Premium', cat: 'Streaming', name: 'Private 1 Bulan', desc: '', note: '', price: 180000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
+      { id: 18, brand: 'Netflix Premium', cat: 'Streaming', name: 'Semi-Private 1P2U 1 Bulan', desc: '', note: '', price: 47000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
+      { id: 19, brand: 'Netflix Premium', cat: 'Streaming', name: 'Semi-Private 1P1U 1 Bulan', desc: '', note: '', price: 55000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
+
+      // HBO MAX
+      { id: 20, brand: 'HBO Max', cat: 'Streaming', name: 'Sharing 1B Std', desc: '', note: '', price: 15000, status: 'ready', icon: 'fa-tv', color: 'text-purple-600' },
+      { id: 21, brand: 'HBO Max', cat: 'Streaming', name: 'Sharing 1B Ultimate', desc: '', note: '', price: 22500, status: 'ready', icon: 'fa-tv', color: 'text-purple-600' },
+      { id: 22, brand: 'HBO Max', cat: 'Streaming', name: 'Private 1B Std', desc: '', note: '', price: 52000, status: 'ready', icon: 'fa-tv', color: 'text-purple-600' },
+      { id: 23, brand: 'HBO Max', cat: 'Streaming', name: 'Private 1B Ultimate', desc: '', note: '', price: 68000, status: 'ready', icon: 'fa-tv', color: 'text-purple-600' },
+
+      // DISNEY+ HOTSTAR
+      { id: 24, brand: 'Disney+ Hotstar', cat: 'Streaming', name: 'Plan Premium 1 Bulan', desc: '', note: '', price: 7000, status: 'ready', icon: 'fa-play', color: 'text-blue-600' },
+
+      // CANVA PRO
+      { id: 25, brand: 'Canva Pro', cat: 'Design', name: 'Anggota Pro (1 Bulan)', desc: '', note: '', price: 4500, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
+      { id: 26, brand: 'Canva Pro', cat: 'Design', name: 'Anggota Pro (1 Tahun)', desc: '', note: '', price: 20000, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
+      { id: 27, brand: 'Canva Pro', cat: 'Design', name: 'Anggota Designer (1 Bulan)', desc: '', note: '', price: 5000, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
+      { id: 28, brand: 'Canva Pro', cat: 'Design', name: 'Anggota Designer (6 Bulan)', desc: '', note: '', price: 12000, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
+      { id: 29, brand: 'Canva Pro', cat: 'Design', name: 'Anggota Designer (1 Tahun)', desc: '', note: '', price: 28000, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
+      { id: 30, brand: 'Canva Pro', cat: 'Design', name: 'Admire Team (1 Bulan)', desc: '', note: '', price: 12000, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
+      { id: 31, brand: 'Canva Pro', cat: 'Design', name: 'Owner Plan (1 Bulan)', desc: '', note: '', price: 16500, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
+      { id: 32, brand: 'Canva Pro', cat: 'Design', name: 'Edu Lifetime (Selamanya)', desc: '', note: '', price: 25000, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
+
+      // CAPCUT PRO
+      { id: 33, brand: 'CapCut Pro', cat: 'Editing', name: 'Private (1 Minggu)', desc: '', note: '', price: 15000, status: 'ready', icon: 'fa-video', color: 'text-slate-800' },
+      { id: 34, brand: 'CapCut Pro', cat: 'Editing', name: 'Private (1 Bulan)', desc: '', note: '', price: 43000, status: 'ready', icon: 'fa-video', color: 'text-slate-800' },
+
+      // ALIGHT MOTION & LIGHTROOM
+      { id: 35, brand: 'Alight Motion Pro', cat: 'Editing', name: 'Sharing (1 Tahun)', desc: '', note: '', price: 6500, status: 'ready', icon: 'fa-wand-magic-sparkles', color: 'text-emerald-600' },
+      { id: 36, brand: 'Alight Motion Pro', cat: 'Editing', name: 'Private (1 Bulan)', desc: '', note: '', price: 10000, status: 'ready', icon: 'fa-wand-magic-sparkles', color: 'text-emerald-600' },
+      { id: 37, brand: 'Lightroom Premium', cat: 'Editing', name: 'Full Preset (1 Tahun)', desc: '', note: '', price: 21000, status: 'ready', icon: 'fa-sliders', color: 'text-sky-600' },
+
+      // NOKOS OTP
+      { id: 38, brand: 'Nokos OTP', cat: 'Nokos', name: 'Indonesia Telegram', desc: '', note: '', price: 9000, status: 'ready', icon: 'fa-sim-card', color: 'text-amber-600' },
+      { id: 39, brand: 'Nokos OTP', cat: 'Nokos', name: 'Luar Negara Telegram', desc: '', note: '', price: 14500, status: 'ready', icon: 'fa-sim-card', color: 'text-amber-600' },
+      { id: 40, brand: 'Nokos OTP', cat: 'Nokos', name: 'Indonesia WhatsApp', desc: '', note: '', price: 6500, status: 'ready', icon: 'fa-sim-card', color: 'text-amber-600' },
+      { id: 41, brand: 'Nokos OTP', cat: 'Nokos', name: 'Luar Negara WhatsApp', desc: '', note: '', price: 0, status: 'ready', icon: 'fa-sim-card', color: 'text-amber-600' },
+      { id: 42, brand: 'Nokos OTP', cat: 'Nokos', name: 'Nokos All Aplikasi Indonesia', desc: '', note: '', price: 6000, status: 'ready', icon: 'fa-sim-card', color: 'text-amber-600' },
+    ];
+
+    let products = JSON.parse(localStorage.getItem('reseller_catalog_v2')) || defaultData;
+    let currentCategory = 'all';
+    let logoClickCount = 0;
+
+    function formatRp(val) { 
+      if (val === 0) return 'Tanya Admin';
+      return 'Rp' + val.toLocaleString('id-ID'); 
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCatalog();
+
+      if (window.location.hash === '#admin') {
+        openAdminModal();
+      }
+    });
+
+    function handleSecretLogoClick() {
+      logoClickCount++;
+      if (logoClickCount === 5) {
+        logoClickCount = 0;
+        openAdminModal();
+      }
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.remove('bg-sage-600', 'text-white', 'shadow-sm');
+        btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+      });
+      const activeBtn = document.getElementById(`cat-${cat}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+        activeBtn.classList.add('bg-sage-600', 'text-white', 'shadow-sm');
+      }
+      renderCatalog();
+    }
+
+    function filterProducts() { renderCatalog(); }
+
+    function renderCatalog() {
+      const searchKeyword = document.getElementById('searchInput').value.toLowerCase();
+      const container = document.getElementById('catalogContainer');
+      container.innerHTML = '';
+
+      const filtered = products.filter(p => {
+        const matchesCat = currentCategory === 'all' || p.cat === currentCategory;
+        const matchesSearch = p.brand.toLowerCase().includes(searchKeyword) || 
+                              p.name.toLowerCase().includes(searchKeyword) ||
+                              (p.desc && p.desc.toLowerCase().includes(searchKeyword)) ||
+                              (p.note && p.note.toLowerCase().includes(searchKeyword));
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-slate-400">
+            <i class="fa-regular fa-folder-open text-4xl mb-2"></i>
+            <p class="text-xs">Produk tidak ditemukan.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const grouped = {};
+      filtered.forEach(p => {
+        if (!grouped[p.brand]) grouped[p.brand] = [];
+        grouped[p.brand].push(p);
+      });
+
+      Object.keys(grouped).forEach(brandName => {
+        const items = grouped[brandName];
+        const firstItem = items[0];
+
+        let itemsHtml = '';
+        items.forEach(item => {
+          const isReady = item.status === 'ready';
+
+          itemsHtml += `
+            <div class="py-2.5 border-b border-slate-100 last:border-none">
+              <div class="flex items-start justify-between">
+                <div class="pr-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-semibold text-slate-800">${item.name}</span>
+                    ${!isReady ? '<span class="text-[9px] bg-rose-100 text-rose-600 px-1.5 py-0.5 rounded font-bold">Habis</span>' : ''}
+                  </div>
+                  ${item.desc ? `<p class="text-[11px] text-slate-500 mt-0.5">${item.desc}</p>` : ''}
+                </div>
+                <div class="text-right flex-shrink-0">
+                  <div class="text-xs font-bold text-sage-700">${formatRp(item.price)}</div>
+                </div>
+              </div>
+              ${item.note ? `
+                <div class="mt-1.5 flex items-center gap-1.5 text-[10px] text-amber-800 bg-amber-50/80 px-2 py-1 rounded-md border border-amber-200/60 font-medium">
+                  <i class="fa-solid fa-circle-info text-amber-600 text-[9px]"></i>
+                  <span>${item.note}</span>
+                </div>
+              ` : ''}
+            </div>
+          `;
+        });
+
+        const brandCard = `
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/70">
+            <div class="flex items-center gap-2.5 pb-2.5 border-b border-slate-100 mb-1">
+              <div class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center text-sm ${firstItem.color}">
+                <i class="fa-solid ${firstItem.icon}"></i>
+              </div>
+              <div>
+                <h2 class="font-bold text-slate-800 text-sm">${brandName}</h2>
+                <span class="text-[10px] text-slate-400 font-medium">${items.length} Pilihan Paket</span>
+              </div>
+            </div>
+            <div class="divide-y divide-slate-100">
+              ${itemsHtml}
+            </div>
+          </div>
+        `;
+        container.innerHTML += brandCard;
+      });
+    }
+
+    // ADMIN LOGIC
+    function openAdminModal() {
+      document.getElementById('adminModal').classList.remove('hidden');
+      document.getElementById('adminAuthView').classList.remove('hidden');
+      document.getElementById('adminPanelView').classList.add('hidden');
+      document.getElementById('pinInput').value = '';
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminModal').classList.add('hidden');
+      history.replaceState(null, null, ' ');
+    }
+
+    function verifyPin() {
+      const pin = document.getElementById('pinInput').value;
+      if (pin === '1234') {
+        document.getElementById('adminAuthView').classList.add('hidden');
+        document.getElementById('adminPanelView').classList.remove('hidden');
+        renderAdminList();
+      } else {
+        alert('PIN Salah!');
+      }
+    }
+
+    function renderAdminList() {
+      const list = document.getElementById('adminProductList');
+      list.innerHTML = '';
+      products.forEach((p, index) => {
+        list.innerHTML += `
+          <div class="p-2.5 bg-slate-50 rounded-xl text-xs border border-slate-200 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800">${p.brand} - ${p.name}</span>
+              <span class="text-[10px] font-bold ${p.status === 'ready' ? 'text-emerald-600' : 'text-rose-600'}">${p.status.toUpperCase()}</span>
+            </div>
+            <div class="text-[11px] text-slate-600">
+              Harga: <b>${formatRp(p.price)}</b> ${p.desc ? `• Deskripsi: ${p.desc}` : ''}
+            </div>
+            ${p.note ? `<div class="text-[10px] text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/50">Note: ${p.note}</div>` : ''}
+            <div class="flex gap-1.5 pt-1">
+              <button onclick="editProduct(${index})" class="flex-1 py-1 bg-amber-100 text-amber-800 rounded-lg text-[11px] font-semibold hover:bg-amber-200">
+                <i class="fa-solid fa-pen-to-square"></i> Edit Detail
+              </button>
+              <button onclick="toggleStatus(${index})" class="px-2.5 py-1 bg-slate-200 text-slate-700 rounded-lg text-[11px] font-semibold">
+                Stok
+              </button>
+              <button onclick="deleteProduct(${index})" class="px-2.5 py-1 bg-rose-100 text-rose-700 rounded-lg text-[11px] font-semibold">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // FITUR EDIT DETAIL PRODUK SECARA LANGSUNG
+    function editProduct(index) {
+      const p = products[index];
+      
+      const newBrand = prompt('Nama Brand:', p.brand);
+      if (newBrand === null) return;
+      
+      const newName = prompt('Nama Paket:', p.name);
+      if (newName === null) return;
+      
+      const newDesc = prompt('Deskripsi Produk (Biarkan kosong jika tidak ada):', p.desc || '');
+      if (newDesc === null) return;
+      
+      const newNote = prompt('Catatan Khusus (misal: Email buyer +4k):', p.note || '');
+      if (newNote === null) return;
+      
+      const newPriceStr = prompt('Harga Jual (ketik 0 jika Tanya Admin):', p.price);
+      if (newPriceStr === null) return;
+      const newPrice = parseInt(newPriceStr) || 0;
+
+      // Update data
+      products[index].brand = newBrand.trim();
+      products[index].name = newName.trim();
+      products[index].desc = newDesc.trim();
+      products[index].note = newNote.trim();
+      products[index].price = newPrice;
+
+      saveProducts();
+      renderAdminList();
+      renderCatalog();
+      alert('Produk berhasil diperbarui!');
+    }
+
+    function toggleStatus(index) {
+      products[index].status = products[index].status === 'ready' ? 'habis' : 'ready';
+      saveProducts();
+      renderAdminList();
+      renderCatalog();
+    }
+
+    function deleteProduct(index) {
+      if (confirm(`Hapus paket ${products[index].name}?`)) {
+        products.splice(index, 1);
+        saveProducts();
+        renderAdminList();
+        renderCatalog();
+      }
+    }
+
+    function showAddProductForm() {
+      const brand = prompt('Nama Brand (cth: Spotify Premium):');
+      if (!brand) return;
+      const name = prompt('Nama Paket (cth: Famplan 1 Bulan):');
+      if (!name) return;
+      const desc = prompt('Deskripsi Singkat (Opsional):') || '';
+      const note = prompt('Catatan Khusus (Opsional):') || '';
+      const price = parseInt(prompt('Harga Jual (ketik 0 jika Tanya Admin):') || '0');
+      const cat = prompt('Kategori (Streaming / Design / Editing / Nokos):') || 'Streaming';
+
+      products.push({
+        id: Date.now(),
+        brand: brand.trim(),
+        cat: cat.trim(),
+        name: name.trim(),
+        desc: desc.trim(),
+        note: note.trim(),
+        price: price,
+        status: 'ready',
+        icon: 'fa-box',
+        color: 'text-sage-600'
+      });
+
+      saveProducts();
+      renderAdminList();
+      renderCatalog();
+    }
+
+    function resetDefaultData() {
+      if (confirm('Reset seluruh data ke daftar default baru? (Semua perubahan buatanmu akan kembali ke awal)')) {
+        products = [...defaultData];
+        saveProducts();
+        renderAdminList();
+        renderCatalog();
+      }
+    }
+
+    function saveProducts() {
+      localStorage.setItem('reseller_catalog_v2', JSON.stringify(products));
+    }
+  </script>
+</body>
+</html>
