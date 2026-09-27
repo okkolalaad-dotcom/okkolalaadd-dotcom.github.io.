@@ -127,31 +127,31 @@
     // DATA DENGAN DESKRIPSI KOSONG SIAP EDIT & TAMBAHAN SPOTIFY + APPLE MUSIC
     const defaultData = [
       // SPOTIFY
-      { id: 1, brand: 'Spotify Premium', cat: 'Streaming', name: 'Famplan 1 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 20500, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
-      { id: 2, brand: 'Spotify Premium', cat: 'Streaming', name: 'Famplan 2 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 0, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
-      { id: 3, brand: 'Spotify Premium', cat: 'Streaming', name: 'Indplan 1 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 21000, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
-      { id: 4, brand: 'Spotify Premium', cat: 'Streaming', name: 'Indplan 2 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 0, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
+      { id: 1, brand: 'Spotify Premium', cat: 'Streaming', name: 'Famplan 1 Bulan', desc: '', note: '', price: 20500, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
+      { id: 2, brand: 'Spotify Premium', cat: 'Streaming', name: 'Famplan 2 Bulan', desc: '', note: '', price: 0, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
+      { id: 3, brand: 'Spotify Premium', cat: 'Streaming', name: 'Indplan 1 Bulan', desc: '', note: '', price: 21000, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
+      { id: 4, brand: 'Spotify Premium', cat: 'Streaming', name: 'Indplan 2 Bulan', desc: '', note: 'email buyer +4k & sistem wajib replace', price: 0, status: 'ready', icon: 'fa-spotify', color: 'text-emerald-500' },
 
       // APPLE MUSIC
-      { id: 5, brand: 'Apple Music', cat: 'Streaming', name: 'Famplan 1 Bulan', desc: '', note: 'Menggunakan imess buyer +Rp1.000 & sistem mungkin replace', price: 19000, status: 'ready', icon: 'fa-music', color: 'text-rose-500' },
-      { id: 6, brand: 'Apple Music', cat: 'Streaming', name: 'Famplan 2 Bulan', desc: '', note: 'Menggunakan imess buyer +Rp1.000 & sistem mungkin replace', price: 0, status: 'ready', icon: 'fa-music', color: 'text-rose-500' },
+      { id: 5, brand: 'Apple Music', cat: 'Streaming', name: 'Famplan 1 Bulan', desc: '', note: '', price: 19000, status: 'ready', icon: 'fa-music', color: 'text-rose-500' },
+      { id: 6, brand: 'Apple Music', cat: 'Streaming', name: 'Famplan 2 Bulan', desc: '', note: 'menggunakan imess buyer +1k & sistem mungkin replace', price: 0, status: 'ready', icon: 'fa-music', color: 'text-rose-500' },
 
-      // YOUTUBE PREMIUM
-      { id: 7, brand: 'YouTube Premium', cat: 'Streaming', name: 'Famplan 1 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 6500, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
-      { id: 8, brand: 'YouTube Premium', cat: 'Streaming', name: 'Famplan 2 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 14000, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
-      { id: 9, brand: 'YouTube Premium', cat: 'Streaming', name: 'Indplan 1 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 12000, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
-      { id: 10, brand: 'YouTube Premium', cat: 'Streaming', name: 'Indplan 3 Bulan', desc: '', note: 'Email buyer +Rp4.000 & sistem wajib replace', price: 28000, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
+      // YOUTUBE
+      { id: 7, brand: 'YouTube Premium', cat: 'Streaming', name: 'Famplan 1 Bulan', desc: '', note: '', price: 6500, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
+      { id: 8, brand: 'YouTube Premium', cat: 'Streaming', name: 'Famplan 2 Bulan', desc: '', note: 'pakai acc adm +1,5k', price: 14000, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
+      { id: 9, brand: 'YouTube Premium', cat: 'Streaming', name: 'Indplan 1 Bulan', desc: '', note: '', price: 12000, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
+      { id: 10, brand: 'YouTube Premium', cat: 'Streaming', name: 'Indplan 3 Bulan', desc: '', note: '', price: 28000, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
       { id: 11, brand: 'YouTube Premium', cat: 'Streaming', name: 'Mixplan Acc Adm Only 3 Bulan', desc: '', note: '', price: 0, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
       { id: 12, brand: 'YouTube Premium', cat: 'Streaming', name: 'Mixplan Acc Adm Only 6 Bulan', desc: '', note: '', price: 0, status: 'ready', icon: 'fa-youtube', color: 'text-red-600' },
 
-      // NETFLIX PREMIUM
+      // NETFLIX
       { id: 13, brand: 'Netflix Premium', cat: 'Streaming', name: 'Sharing 1P1U 3 Hari', desc: '', note: '', price: 11000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
       { id: 14, brand: 'Netflix Premium', cat: 'Streaming', name: 'Sharing 1P1U 7 Hari', desc: '', note: '', price: 18000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
       { id: 15, brand: 'Netflix Premium', cat: 'Streaming', name: 'Sharing 1P1U 1 Bulan', desc: '', note: '', price: 42000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
       { id: 16, brand: 'Netflix Premium', cat: 'Streaming', name: 'Sharing 1P2U 1 Bulan', desc: '', note: '', price: 26000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
-      { id: 17, brand: 'Netflix Premium', cat: 'Streaming', name: 'Private 1 Bulan', desc: '', note: '', price: 180000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
-      { id: 18, brand: 'Netflix Premium', cat: 'Streaming', name: 'Semi-Private 1P2U 1 Bulan', desc: '', note: '', price: 47000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
-      { id: 19, brand: 'Netflix Premium', cat: 'Streaming', name: 'Semi-Private 1P1U 1 Bulan', desc: '', note: '', price: 55000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
+      { id: 17, brand: 'Netflix Premium', cat: 'Streaming', name: 'Private 1 Bulan', desc: '', note: 'semua plan netflix pakai acc admin. wajib isi lokasi & device.', price: 180000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
+      { id: 18, brand: 'Netflix Premium', cat: 'Streaming', name: 'Semi-Private 1P2U 1 Bulan', desc: '1 profile 2 device', note: '', price: 47000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
+      { id: 19, brand: 'Netflix Premium', cat: 'Streaming', name: 'Semi-Private 1P1U 1 Bulan', desc: '2 profile 2 device', note: '', price: 55000, status: 'ready', icon: 'fa-film', color: 'text-red-700' },
 
       // HBO MAX
       { id: 20, brand: 'HBO Max', cat: 'Streaming', name: 'Sharing 1B Std', desc: '', note: '', price: 15000, status: 'ready', icon: 'fa-tv', color: 'text-purple-600' },
@@ -170,23 +170,23 @@
       { id: 29, brand: 'Canva Pro', cat: 'Design', name: 'Anggota Designer (1 Tahun)', desc: '', note: '', price: 28000, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
       { id: 30, brand: 'Canva Pro', cat: 'Design', name: 'Admire Team (1 Bulan)', desc: '', note: '', price: 12000, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
       { id: 31, brand: 'Canva Pro', cat: 'Design', name: 'Owner Plan (1 Bulan)', desc: '', note: '', price: 16500, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
-      { id: 32, brand: 'Canva Pro', cat: 'Design', name: 'Edu Lifetime (Selamanya)', desc: '', note: '', price: 25000, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
+      { id: 32, brand: 'Canva Pro', cat: 'Design', name: 'Edu Lifetime (Selamanya)', desc: '', note: 'akun dari buyyer (email saja) sistem invite by email / link', price: 25000, status: 'ready', icon: 'fa-palette', color: 'text-cyan-600' },
 
       // CAPCUT PRO
       { id: 33, brand: 'CapCut Pro', cat: 'Editing', name: 'Private (1 Minggu)', desc: '', note: '', price: 15000, status: 'ready', icon: 'fa-video', color: 'text-slate-800' },
-      { id: 34, brand: 'CapCut Pro', cat: 'Editing', name: 'Private (1 Bulan)', desc: '', note: '', price: 43000, status: 'ready', icon: 'fa-video', color: 'text-slate-800' },
+      { id: 34, brand: 'CapCut Pro', cat: 'Editing', name: 'Private (1 Bulan)', desc: '', note: 'acc dari admin', price: 43000, status: 'ready', icon: 'fa-video', color: 'text-slate-800' },
 
       // ALIGHT MOTION & LIGHTROOM
       { id: 35, brand: 'Alight Motion Pro', cat: 'Editing', name: 'Sharing (1 Tahun)', desc: '', note: '', price: 6500, status: 'ready', icon: 'fa-wand-magic-sparkles', color: 'text-emerald-600' },
-      { id: 36, brand: 'Alight Motion Pro', cat: 'Editing', name: 'Private (1 Bulan)', desc: '', note: '', price: 10000, status: 'ready', icon: 'fa-wand-magic-sparkles', color: 'text-emerald-600' },
-      { id: 37, brand: 'Lightroom Premium', cat: 'Editing', name: 'Full Preset (1 Tahun)', desc: '', note: '', price: 21000, status: 'ready', icon: 'fa-sliders', color: 'text-sky-600' },
+      { id: 36, brand: 'Alight Motion Pro', cat: 'Editing', name: 'Private (1 Bulan)', desc: '', note: 'akun dari admin. dari buyyer? + biaya admin 1,5rb. AKUN EMAIL HARUS FRESH! ', price: 10000, status: 'ready', icon: 'fa-wand-magic-sparkles', color: 'text-emerald-600' },
+      { id: 37, brand: 'Lightroom Premium', cat: 'Editing', name: 'Full Preset (1 Tahun)', desc: '', note: 'pakai acc adm +1,5k', price: 21000, status: 'ready', icon: 'fa-sliders', color: 'text-sky-600' },
 
       // NOKOS OTP
       { id: 38, brand: 'Nokos OTP', cat: 'Nokos', name: 'Indonesia Telegram', desc: '', note: '', price: 9000, status: 'ready', icon: 'fa-sim-card', color: 'text-amber-600' },
       { id: 39, brand: 'Nokos OTP', cat: 'Nokos', name: 'Luar Negara Telegram', desc: '', note: '', price: 14500, status: 'ready', icon: 'fa-sim-card', color: 'text-amber-600' },
       { id: 40, brand: 'Nokos OTP', cat: 'Nokos', name: 'Indonesia WhatsApp', desc: '', note: '', price: 6500, status: 'ready', icon: 'fa-sim-card', color: 'text-amber-600' },
       { id: 41, brand: 'Nokos OTP', cat: 'Nokos', name: 'Luar Negara WhatsApp', desc: '', note: '', price: 0, status: 'ready', icon: 'fa-sim-card', color: 'text-amber-600' },
-      { id: 42, brand: 'Nokos OTP', cat: 'Nokos', name: 'Nokos All Aplikasi Indonesia', desc: '', note: '', price: 6000, status: 'ready', icon: 'fa-sim-card', color: 'text-amber-600' },
+      { id: 42, brand: 'Nokos OTP', cat: 'Nokos', name: 'Nokos All Aplikasi Indonesia', desc: '', note: 'tergantung apk', price: 6000, status: 'ready', icon: 'fa-sim-card', color: 'text-amber-600' },
     ];
 
     let products = JSON.parse(localStorage.getItem('reseller_catalog_v2')) || defaultData;
